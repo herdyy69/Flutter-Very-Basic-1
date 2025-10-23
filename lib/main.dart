@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'widgets/profile_card.dart';
-import 'widgets/info_card.dart';
-import 'widgets/contact_card.dart';
+import 'pages/movie_page.dart';
+import 'pages/profile_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -32,38 +31,46 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  int _currentIndex = 0;
+
+  final List<Widget> _pages = [const MoviePage(), const ProfilePage()];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Profile & Contact App'),
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        centerTitle: true,
-      ),
-      body: const SingleChildScrollView(
-        child: Column(
-          children: [
-            // StatefulWidget - ProfileCard dengan counter
-            ProfileCard(
-              name: 'Herdyansah',
-              email: 'herdyansah203@gmail.com',
-              imageUrl: '',
-              bio:
-                  'Flutter Developer passionate about creating beautiful mobile apps. Love coding and coffee! ☕',
+      body: _pages[_currentIndex],
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          color: Colors.black,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.3),
+              blurRadius: 10,
+              offset: const Offset(0, -5),
             ),
-            // StatelessWidget - InfoCard untuk informasi statis
-            InfoCard(
-              location: 'Bandung, Indonesia',
-              joinDate: 'January 2023',
-              website: 'herdyansah.dev',
-              bio:
-                  'Passionate about Flutter development and creating amazing user experiences.',
+          ],
+        ),
+        child: BottomNavigationBar(
+          currentIndex: _currentIndex,
+          onTap: (index) {
+            setState(() {
+              _currentIndex = index;
+            });
+          },
+          backgroundColor: Colors.black,
+          selectedItemColor: Colors.white,
+          unselectedItemColor: Colors.grey[600],
+          type: BottomNavigationBarType.fixed,
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home_outlined),
+              activeIcon: Icon(Icons.home),
+              label: 'Home',
             ),
-            // StatelessWidget - ContactCard untuk kontak statis
-            ContactCard(
-              phone: '085155338717',
-              email: 'herdyansah203@gmail.com',
-              instagram: 'herdyy69',
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person_outline),
+              activeIcon: Icon(Icons.person),
+              label: 'Profile',
             ),
           ],
         ),
