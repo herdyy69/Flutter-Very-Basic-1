@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class ProfileCard extends StatelessWidget {
+class ProfileCard extends StatefulWidget {
   final String name;
   final String email;
   final String imageUrl;
@@ -15,6 +15,33 @@ class ProfileCard extends StatelessWidget {
   });
 
   @override
+  State<ProfileCard> createState() => _ProfileCardState();
+}
+
+class _ProfileCardState extends State<ProfileCard> {
+  int _postsCount = 24;
+  int _followersCount = 1200;
+  int _followingCount = 456;
+
+  void _incrementPosts() {
+    setState(() {
+      _postsCount++;
+    });
+  }
+
+  void _incrementFollowers() {
+    setState(() {
+      _followersCount++;
+    });
+  }
+
+  void _incrementFollowing() {
+    setState(() {
+      _followingCount++;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Card(
       margin: const EdgeInsets.all(16),
@@ -25,20 +52,20 @@ class ProfileCard extends StatelessWidget {
           children: [
             CircleAvatar(
               radius: 50,
-              backgroundImage: NetworkImage(imageUrl),
-              child: imageUrl.isEmpty
+              backgroundImage: NetworkImage(widget.imageUrl),
+              child: widget.imageUrl.isEmpty
                   ? const Icon(Icons.person, size: 50)
                   : null,
             ),
             const SizedBox(height: 16),
             Text(
-              name,
+              widget.name,
               style: Theme.of(context).textTheme.headlineSmall,
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 8),
             Text(
-              email,
+              widget.email,
               style: Theme.of(
                 context,
               ).textTheme.bodyMedium?.copyWith(color: Colors.grey[600]),
@@ -46,7 +73,7 @@ class ProfileCard extends StatelessWidget {
             ),
             const SizedBox(height: 12),
             Text(
-              bio,
+              widget.bio,
               style: Theme.of(context).textTheme.bodyMedium,
               textAlign: TextAlign.center,
             ),
@@ -54,9 +81,21 @@ class ProfileCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                _buildStatItem('Posts', '24'),
-                _buildStatItem('Followers', '1.2K'),
-                _buildStatItem('Following', '456'),
+                _buildStatItem(
+                  'Posts',
+                  _postsCount.toString(),
+                  _incrementPosts,
+                ),
+                _buildStatItem(
+                  'Followers',
+                  _followersCount.toString(),
+                  _incrementFollowers,
+                ),
+                _buildStatItem(
+                  'Following',
+                  _followingCount.toString(),
+                  _incrementFollowing,
+                ),
               ],
             ),
           ],
@@ -65,15 +104,24 @@ class ProfileCard extends StatelessWidget {
     );
   }
 
-  Widget _buildStatItem(String label, String value) {
-    return Column(
-      children: [
-        Text(
-          value,
-          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-        ),
-        Text(label, style: TextStyle(fontSize: 12, color: Colors.grey[600])),
-      ],
+  Widget _buildStatItem(String label, String value, VoidCallback onTap) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Column(
+        children: [
+          Text(
+            value,
+            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+          Text(label, style: TextStyle(fontSize: 12, color: Colors.grey[600])),
+          const SizedBox(height: 4),
+          Icon(
+            Icons.add_circle_outline,
+            size: 16,
+            color: Theme.of(context).primaryColor,
+          ),
+        ],
+      ),
     );
   }
 }
