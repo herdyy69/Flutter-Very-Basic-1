@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
+import 'package:provider/provider.dart';
+import '../../providers/movie_provider.dart';
 
 class MovieSwiper extends StatelessWidget {
   final List<Map<String, dynamic>> movies;
@@ -156,18 +158,18 @@ class MovieSwiper extends StatelessWidget {
                   );
                 },
             onSwipe: (previousIndex, currentIndex, direction) {
-              // Handle swipe logic here
+              final movieProvider =
+                  Provider.of<MovieProvider>(context, listen: false);
+              final movie = movies[previousIndex];
+
               if (direction == CardSwiperDirection.left) {
-                // Swipe left = dislike
-                print('Disliked: ${movies[previousIndex]['title']}');
+                movieProvider.dislikeMovie(movie);
               } else if (direction == CardSwiperDirection.right) {
-                // Swipe right = like
-                print('Liked: ${movies[previousIndex]['title']}');
+                movieProvider.likeMovie(movie);
               }
               return true;
             },
             onEnd: () {
-              // Handle when all cards are swiped
               return true;
             },
           ),
