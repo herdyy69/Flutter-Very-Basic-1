@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../pages/movie_detail_page.dart';
 
 class TrendingSection extends StatelessWidget {
   final List<Map<String, dynamic>> movies;
@@ -30,10 +31,19 @@ class TrendingSection extends StatelessWidget {
             itemCount: movies.length,
             itemBuilder: (context, index) {
               final movie = movies[index];
-              return Container(
-                width: 140,
-                margin: const EdgeInsets.only(right: 16),
-                child: Column(
+              return InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => MovieDetailPage(movie: movie),
+                    ),
+                  );
+                },
+                child: Container(
+                  width: 140,
+                  margin: const EdgeInsets.only(right: 16),
+                  child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Expanded(
@@ -94,6 +104,7 @@ class TrendingSection extends StatelessWidget {
                       ],
                     ),
                   ],
+                ),
                 ),
               );
             },

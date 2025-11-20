@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../providers/movie_provider.dart';
+import '../../pages/movie_detail_page.dart';
 
 class LikedMoviesSection extends StatelessWidget {
   const LikedMoviesSection({super.key});
@@ -57,10 +58,19 @@ class LikedMoviesSection extends StatelessWidget {
             itemCount: likedMovies.length,
             itemBuilder: (context, index) {
               final movie = likedMovies[index];
-              return Container(
-                width: 140,
-                margin: const EdgeInsets.only(right: 16),
-                child: Column(
+              return InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => MovieDetailPage(movie: movie),
+                    ),
+                  );
+                },
+                child: Container(
+                  width: 140,
+                  margin: const EdgeInsets.only(right: 16),
+                  child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Expanded(
@@ -141,6 +151,7 @@ class LikedMoviesSection extends StatelessWidget {
                       ],
                     ),
                   ],
+                ),
                 ),
               );
             },

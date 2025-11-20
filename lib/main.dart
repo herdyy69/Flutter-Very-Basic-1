@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'pages/movie_page.dart';
 import 'pages/profile_page.dart';
+import 'pages/search_page.dart';
+import 'pages/history_page.dart';
 import 'providers/movie_provider.dart';
 
 void main() {
@@ -38,7 +40,12 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _currentIndex = 0;
 
-  final List<Widget> _pages = [const MoviePage(), const ProfilePage()];
+  final List<Widget> _pages = [
+    const MoviePage(),
+    const SearchPage(),
+    const HistoryPage(),
+    const ProfilePage(),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -71,6 +78,16 @@ class _MyHomePageState extends State<MyHomePage> {
               icon: Icon(Icons.home_outlined),
               activeIcon: Icon(Icons.home),
               label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.search_outlined),
+              activeIcon: Icon(Icons.search),
+              label: 'Search',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.history_outlined),
+              activeIcon: Icon(Icons.history),
+              label: 'History',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.person_outline),

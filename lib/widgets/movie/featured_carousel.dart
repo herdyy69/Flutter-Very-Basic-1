@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import '../../pages/movie_detail_page.dart';
 
 class FeaturedCarousel extends StatelessWidget {
   final List<Map<String, dynamic>> movies;
@@ -41,19 +42,28 @@ class FeaturedCarousel extends StatelessWidget {
           items: movies.map((movie) {
             return Builder(
               builder: (BuildContext context) {
-                return Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 8),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(16),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.3),
-                        blurRadius: 10,
-                        offset: const Offset(0, 5),
+                return InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => MovieDetailPage(movie: movie),
                       ),
-                    ],
-                  ),
-                  child: ClipRRect(
+                    );
+                  },
+                  child: Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 8),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(16),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.3),
+                          blurRadius: 10,
+                          offset: const Offset(0, 5),
+                        ),
+                      ],
+                    ),
+                    child: ClipRRect(
                     borderRadius: BorderRadius.circular(16),
                     child: Stack(
                       fit: StackFit.expand,
@@ -130,6 +140,7 @@ class FeaturedCarousel extends StatelessWidget {
                         ),
                       ],
                     ),
+                  ),
                   ),
                 );
               },

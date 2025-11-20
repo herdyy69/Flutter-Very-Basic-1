@@ -98,7 +98,6 @@ class ContactCard extends StatelessWidget {
     return Builder(
       builder: (context) => ElevatedButton.icon(
         onPressed: () {
-          // Static action - no state change needed
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text('$label button pressed'),
